@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="User1.TextView" parent="Widget.MaterialComponents.TextView">
+
+    <style name="User1_TextView" parent="Widget.AppCompat.TextView">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_marginTop">12dp</item>
@@ -12,9 +13,8 @@
         <item name="android:layout_gravity">end</item>
     </style>
 
-    <style name="User2.TextView" parent="User1.TextView">
-        <item name="android:layout_gravity">start</item>
-        <item name="android:layout_marginHorizontal">20dp</item>
+    <style name="User2_TextView" parent="User1_TextView">
         <item name="android:background">@drawable/bg_btn_sent_2</item>
+        <item name="android:layout_gravity">start</item>
     </style>
 </resources>

@@ -1,10 +1,7 @@
 package com.example.mychat
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.mychat.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -16,6 +13,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(viewBinding.root)
 
         supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container_view_tag, MainFragment()).commit();
+            .add(R.id.fragment_container_view_tag, ContactsFragment()).commit();
     }
 }
