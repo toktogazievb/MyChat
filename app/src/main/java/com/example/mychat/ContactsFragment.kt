@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mychat.databinding.FragmentContactsBinding
 
@@ -19,6 +20,7 @@ class ContactsFragment : Fragment() {
         super.onCreate(savedInstanceState)
         loadData()
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,17 +33,17 @@ class ContactsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         contactAdapter = ContactAdapter(contacts) { position ->
             val contactsModel = contacts[position]
-            val bundle = Bundle().apply {
-                putString("contactName", contactsModel.name)
-                putString("contactNumber", contactsModel.number)
-                putString("contactPhoto", contactsModel.image)
-            }
+            val name = contactsModel.name
+            val number = contactsModel.number
+            val photo = contactsModel.image
+//                Bundle().apply {
+//                putString("contactName", contactsModel.name)
+//                putString("contactNumber", contactsModel.number)
+//                putString("contactPhoto", contactsModel.image)
+//            }
+            val action = ContactsFragmentDirections.actionContactsFragmentToChatFragment(name, number, photo)
 
-            val fragment = ChatFragment()
-            fragment.arguments = bundle
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container_view_tag, fragment).addToBackStack(null)
-                .commit()
+            findNavController().navigate(action)
         }
         viewBinding.apply {
             rvContacts.adapter = contactAdapter

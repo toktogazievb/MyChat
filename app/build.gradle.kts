@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("androidx.navigation.safeargs.kotlin")
+
 }
 
 android {
@@ -40,6 +42,8 @@ android {
 
 dependencies {
 
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.navigation.ui)
     implementation(libs.hdodenhof.circleimageview)
     implementation(libs.glide)
     implementation(libs.androidx.core.ktx)

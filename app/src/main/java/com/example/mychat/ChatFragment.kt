@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.mychat.databinding.FragmentChatBinding
@@ -25,37 +27,42 @@ class ChatFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var number: String? = null
-        var image: String? = null
-        val message= ArrayList<ChatModel>()
+
+        val message = ArrayList<ChatModel>()
         val chatAdapter = ChatAdapter(message, activity)
         viewBinding.contMessage.adapter = chatAdapter
         viewBinding.contMessage.layoutManager = LinearLayoutManager(activity)
         var isUser1 = true
         Toast.makeText(context, "User 1", Toast.LENGTH_LONG).show()
         viewBinding.apply {
-            if (arguments != null) {
-                tvName.text = arguments?.getString("contactName")
-                image = arguments?.getString("contactPhoto")
-                Glide.with(imgContact).load(image).into(imgContact)
-                number = arguments?.getString("contactNumber")
-            }
+            val args: ChatFragmentArgs by navArgs()
+            val getName = args.name
+            val getPhoto = args.photo
+            val getNumber = args.number
+
+            tvName.text = getName
+            Glide.with(imgContact).load(getPhoto).into(imgContact)
+
             contInfo.setOnClickListener {
-                val bundle = Bundle().apply {
-                    putString("contactName", tvName.text.toString())
-                    putString("contactNumber", number)
-                    putString("contactPhoto", image)
-                }
-                val fragment = ContactInfoFragment()
-                fragment.arguments = bundle
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container_view_tag, fragment).addToBackStack(null)
-                    .commit()
+//                val box = Bundle().apply {
+//                    putString("contactName", tvName.text.toString())
+//                    putString("contactNumber", number)
+//                    putString("contactPhoto", photo)
+//                }
+                val name = getName
+                val number = getPhoto
+                val photo = getNumber
+                val action = ChatFragmentDirections.actionChatFragmentToContactInfoFragment(
+                    photo,
+                    name,
+                    number
+                )
+                findNavController().navigate(action)
             }
             imgBtn.setOnClickListener {
 
                 val messageText = etMessage.text.toString()
-                if(messageText.isNotEmpty()){
+                if (messageText.isNotEmpty()) {
                     val newMessage = ChatModel(messageText, isUser1)
                     message.add(newMessage)
                     chatAdapter.notifyItemInserted(message.size - 1)

@@ -11,8 +11,5 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         viewBinding = ActivityMainBinding.inflate(layoutInflater);
         setContentView(viewBinding.root)
-
-        supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container_view_tag, ContactsFragment()).commit();
     }
 }
